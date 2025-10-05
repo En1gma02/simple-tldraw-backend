@@ -70,11 +70,17 @@ app.register(async (app) => {
 	})
 })
 
-app.listen({ port: PORT }, (err) => {
+// Use the port Render provides, or fall back to 5858 for local testing
+const port = process.env.PORT ? parseInt(process.env.PORT) : PORT;
+
+// Listen on 0.0.0.0 to be accessible from outside the container
+const host = '0.0.0.0';
+
+app.listen({ port: port, host: host }, (err) => {
 	if (err) {
 		console.error(err)
 		process.exit(1)
 	}
 
-	console.log(`Server started on port ${PORT}`)
+	console.log(`Server started on host ${host} and port ${port}`)
 })
