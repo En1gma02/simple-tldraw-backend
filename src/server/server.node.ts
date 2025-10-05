@@ -15,8 +15,13 @@ app.register(websocketPlugin)
 app.register(cors, { origin: '*' })
 
 app.register(async (app) => {
+    // ADD THIS NEW ROUTE AT THE TOP
+    app.get('/', async (req, res) => {
+        res.send({ status: 'ok', message: 'tldraw server is running' });
+    });
+
 	// This is the main entrypoint for the multiplayer sync
-	app.get('/connect/:roomId', { websocket: true }, async (socket, req) => {
+	app.get('/api/connect/:roomId', { websocket: true }, async (socket, req) => {
 		// The roomId comes from the URL pathname
 		const roomId = (req.params as any).roomId as string
 		// The sessionId is passed from the client as a query param,
